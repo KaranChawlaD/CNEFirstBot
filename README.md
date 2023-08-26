@@ -1,2 +1,2 @@
-# SYRC-2023-Code-Command-Based
+# SYRC-2023-CNE-FIRST-BOT
 FRC 8729 2023 Java code for CNEFirstBot
