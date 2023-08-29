@@ -1,0 +1,35 @@
+{
+  "HALProvider": {
+    "Solenoids": {
+      "1": {
+        "header": {
+          "open": true
+        }
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Autonomous/SendableChooser[0]": "String Chooser"
+    },
+    "windows": {
+      "/Shuffleboard/Autonomous/SendableChooser[0]": {
+        "window": {
+          "visible": true
+        }
+      }
+    }
+  },
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "Transitory Values": {
+      "open": false
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}
