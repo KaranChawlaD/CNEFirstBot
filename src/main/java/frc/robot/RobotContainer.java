@@ -11,6 +11,7 @@ import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.RotationConstants;
 import frc.robot.commands.ArcadeDriveCommand;
+import frc.robot.commands.BalanceDrive;
 import frc.robot.commands.ConeAutomation;
 import frc.robot.commands.DoubleSubstationCommand;
 import frc.robot.subsystems.DriveSubsystem;
@@ -18,6 +19,7 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PCMSubsystem;
 import frc.robot.subsystems.RotationSubsystem;
+import frc.robot.subsystems.Stopwatch;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.EnableCompressorCommand;
 import frc.robot.commands.IntakeCommand;
@@ -48,6 +50,7 @@ public class RobotContainer {
         private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
         private final RotationSubsystem rotationSubsystem = new RotationSubsystem();
         private final PCMSubsystem pcmSubsystem = new PCMSubsystem();
+        private final Stopwatch timer = new Stopwatch();
 
         // Replace with CommandPS4Controller or CommandJoystick if needed
         private final Joystick driverController = new Joystick(ControllerConstants.DRIVER_CONTROLLER_PORT);
@@ -75,11 +78,11 @@ public class RobotContainer {
                 // Autonomous Chooser Options
                 chooser.setDefaultOption("Engage Auto",
                                 new EngageAuto(driveSubsystem, elevatorSubsystem, rotationSubsystem,
-                                                intakeSubsystem));
+                                                intakeSubsystem, timer));
 
                 chooser.addOption("Mobility Auto",
                                 new MobilityAuto(driveSubsystem, elevatorSubsystem, rotationSubsystem,
-                                                intakeSubsystem));
+                                                intakeSubsystem, timer));
 
                 // Put the chooser on the dashboard
                 Shuffleboard.getTab("Autonomous").add(chooser);
@@ -125,6 +128,9 @@ public class RobotContainer {
                                 .onTrue(new ConeAutomation(rotationSubsystem, elevatorSubsystem));
                 new JoystickButton(operatorController, AutoConstants.RETRACT_AUTOMATION_BUTTON)
                                 .onTrue(new RetractAutomation(rotationSubsystem, elevatorSubsystem, intakeSubsystem));
+                
+                // Testing Balance
+                new JoystickButton(driverController, 1).onTrue(new BalanceDrive(driveSubsystem));
         }
 
         /**

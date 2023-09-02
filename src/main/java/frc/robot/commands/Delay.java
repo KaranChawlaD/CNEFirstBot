@@ -5,39 +5,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.Stopwatch;
 
-public class BalanceDrive extends CommandBase {
-  private final DriveSubsystem driveSubsystem;
+public class Delay extends CommandBase {
+  private double delayAmount;
+  private Stopwatch stopwatch;
 
-  /** Creates a new BalanceDrive. */
-  public BalanceDrive(DriveSubsystem driveSubsystem) {
-    this.driveSubsystem = driveSubsystem;
-    addRequirements(driveSubsystem);
+  /** Creates a new Delay. */
+  public Delay(Stopwatch stopwatch, double delayAmount) {
+    this.delayAmount = delayAmount;
+    this.stopwatch = stopwatch;
     // Use addRequirements() here to declare subsystem dependencies.
+
+    addRequirements(stopwatch);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    stopwatch.resetTimer();
+    stopwatch.startTimer();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-      driveSubsystem.setMotor(0.56, 0.0);
-
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    driveSubsystem.setMotor(-0.4, 0.0);
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (driveSubsystem.getGyroRoll() < 13);
+    return stopwatch.getTimer() > delayAmount;
   }
 }

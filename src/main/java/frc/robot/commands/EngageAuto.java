@@ -11,6 +11,7 @@ import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.RotationSubsystem;
+import frc.robot.subsystems.Stopwatch;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -18,17 +19,21 @@ import frc.robot.subsystems.RotationSubsystem;
 public class EngageAuto extends SequentialCommandGroup {
   /** Creates a new EngageAuto. */
   public EngageAuto(DriveSubsystem driveSubsystem, ElevatorSubsystem elevatorSubsystem,
-      RotationSubsystem rotationSubsystem, IntakeSubsystem intakeSubsystem) {
+      RotationSubsystem rotationSubsystem, IntakeSubsystem intakeSubsystem, Stopwatch timer) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new ConeAutomation(rotationSubsystem, elevatorSubsystem),
-        new ArcadeDriveCommand(driveSubsystem, () -> 0.4, () -> 0.0).withTimeout(0.75),
         new IntakeCommand(intakeSubsystem, true),
+        new Delay(timer, 0.3),
         new ParallelCommandGroup(
-            new ArcadeDriveCommand(driveSubsystem, () -> -0.6, () -> 0.0).withTimeout(3.5),
-            new ElevatorCommand(elevatorSubsystem, ElevatorConstants.ELEVATOR_DOWN_SPEED).withTimeout(1.5)),
-        new ArcadeDriveCommand(driveSubsystem, () -> 0.5, () -> 0.0).withTimeout(1),
-        new BalanceDrive(driveSubsystem));
+            new RetractAutomation(rotationSubsystem, elevatorSubsystem, intakeSubsystem),
+            new ArcadeDriveCommand(driveSubsystem, () -> -0.65, () -> 0.0).withTimeout(5)),
+        new ArcadeDriveCommand(driveSubsystem, () -> 0.625, () -> 0.0).withTimeout(2.5),
+        new BalanceDrive(driveSubsystem),
+        new Delay(timer, 0.05),
+        new Turn90(driveSubsystem, true),
+        new ArcadeDriveCommand(driveSubsystem, () -> 0.0, () -> 0.0))
+        ;
   }
 }

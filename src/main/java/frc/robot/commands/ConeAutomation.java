@@ -20,6 +20,6 @@ public class ConeAutomation extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
         new RotationCommand(rotationSubsystem, true),
-        new ElevatorCommand(elevatorSubsystem, ElevatorConstants.ELEVATOR_UP_SPEED).withTimeout(1.75));
+        new ElevatorCommand(elevatorSubsystem, ElevatorConstants.ELEVATOR_UP_SPEED).withTimeout(1.5));
   }
 }

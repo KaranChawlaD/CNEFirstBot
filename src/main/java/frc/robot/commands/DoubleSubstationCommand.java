@@ -25,7 +25,7 @@ public class DoubleSubstationCommand extends SequentialCommandGroup {
         new ParallelCommandGroup(
             new RotationCommand(rotationSubsystem, true),
             new IntakeCommand(intakeSubsystem, true),
-            new ElevatorCommand(elevatorSubsystem, ElevatorConstants.ELEVATOR_UP_SPEED).withTimeout(0.25)));
+            new ElevatorCommand(elevatorSubsystem, ElevatorConstants.ELEVATOR_UP_SPEED).withTimeout(0.5)));
 
   }
 }
